@@ -1,0 +1,38 @@
+# .gitignore
+
+# Python
+*.pyc
+__pycache__/
+venv/
+env/
+.Python
+.venv
+.env
+# Django
+*.log
+*.pot
+*.mo
+db.sqlite3
+media/
+myproject/settings_local.py # Si usas un archivo de settings local para desarrollo
+
+
+# IDEs y Editores (ejemplos comunes, añade los tuyos)
+.idea/                  # PyCharm
+.vscode/                # VS Code
+*.sublime-project
+*.sublime-workspace
+.DS_Store               # macOS
+Thumbs.db               # Windows
+
+# Otros
+dist/
+build/
+*.egg-info/
+.coverage
+.tox/
+/htmlcov/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.python-version
