@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Carta from "./pages/Carta";
 import Cocteleria from "./pages/Cocteleria";
@@ -9,6 +10,7 @@ import Contacto from "./pages/Contacto";
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/carta" element={<Carta />} />
