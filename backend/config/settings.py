@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "empleados",
     "pages",
     "social",
+    "avisos",
 ]
 
 MIDDLEWARE = [
