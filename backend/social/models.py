@@ -16,7 +16,7 @@ class SocialLink(models.Model):
 
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
     tipo = models.CharField(max_length=20, choices=REDES, verbose_name="Tipo de Red")
-    url = models.URLField(verbose_name="Enlace")
+    url = models.CharField(verbose_name="Enlace o email")
     icono = models.CharField(max_length=50, blank=True, null=True, verbose_name="Clase de icono (opcional)")
     visible = models.BooleanField(default=True, verbose_name="Visible")
     orden = models.PositiveIntegerField(default=0, verbose_name="Orden de aparición")

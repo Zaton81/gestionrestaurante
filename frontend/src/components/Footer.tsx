@@ -44,22 +44,26 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div className="col-md-6 text-md-end">
-            {sociales.map((social) => (
-              <a
-                key={social.tipo + social.nombre}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-light ms-3 fs-4"
-                title={social.nombre}
-              >
-                {social.icono ? (
-                  <i className={social.icono}></i>
-                ) : (
-                  <span>{social.nombre}</span>
-                )}
-              </a>
-            ))}
+            {sociales.map((social) => {
+              const isEmail = social.url.includes("@") && !social.url.startsWith("http");
+              const href = isEmail ? `mailto:${social.url}` : social.url;
+              return (
+                <a
+                  key={social.tipo + social.nombre}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-light ms-3 fs-4"
+                  title={social.nombre}
+                >
+                  {social.icono ? (
+                    <i className={social.icono}></i>
+                  ) : (
+                    <span>{social.nombre}</span>
+                  )}
+                </a>
+              );
+            })}
           </div>
         </div>
         <div className="text-center mt-3">
