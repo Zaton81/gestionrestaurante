@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const horarios = [
@@ -7,8 +7,22 @@ const horarios = [
   { dia: "Domingo", horas: "13:00 - 16:30" },
 ];
 
+interface Aviso {
+  id: number;
+  titulo: string;
+  contenido: string;
+}
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [avisos, setAvisos] = useState<Aviso[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/avisos/")
+      .then((res) => res.json())
+      .then((data) => setAvisos(data))
+      .catch(() => setAvisos([]));
+  }, []);
 
   return (
     <div className="container my-5">
@@ -33,13 +47,25 @@ const Home: React.FC = () => {
             ))}
           </ul>
           <button
-            className="btn btn-danger btn-lg"
+            className="btn btn-primary btn-lg"
             onClick={() => navigate("/reservas")}
           >
             ¡Reserva tu mesa aquí!
           </button>
         </div>
       </div>
+      {/* Avisos dinámicos */}
+      {avisos.length > 0 && (
+        <div className="mt-5">
+          {avisos.map((aviso) => (
+            <div
+              key={aviso.id}
+              className="alert alert-warning"
+              dangerouslySetInnerHTML={{ __html: aviso.contenido }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
