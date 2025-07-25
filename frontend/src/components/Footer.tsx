@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { RESTAURANT_NAME, RESTAURANT_SLOGAN } from "../config/constants";
 
 interface Pagina {
   slug: string;
@@ -67,7 +68,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="text-center mt-3">
-          <small>&copy; {new Date().getFullYear()} MiRestaurante. Todos los derechos reservados.</small>
+          <small>&copy; {new Date().getFullYear()} {RESTAURANT_NAME}. Todos los derechos reservados.</small>
         </div>
       </div>
     </footer>

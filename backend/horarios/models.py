@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+
 class Horario(models.Model):
     DIAS_SEMANA = [
         (0, 'Lunes'),
