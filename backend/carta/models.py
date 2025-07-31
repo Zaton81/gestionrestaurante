@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True, verbose_name="Tipo")
-    descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
+    descripcion = RichTextField(blank=True, null=True, verbose_name="Descripción")
     orden = models.PositiveIntegerField(default=0, verbose_name="Orden de Visualización")
     activa = models.BooleanField(default=True, verbose_name="Categoría Activa")
 
@@ -41,9 +42,9 @@ class Plato(models.Model):
     ]
     
     nombre = models.CharField(max_length=200, verbose_name="Nombre")
-    descripcion = models.TextField(verbose_name="Descripción")
+    descripcion = RichTextField(verbose_name="Descripción")
     precio = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Precio")
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoría")
+    categoria = models.ForeignKey(Categoria, related_name='platos', on_delete=models.CASCADE, verbose_name="Categoría")
     tipo_plato = models.CharField(max_length=20, choices=TIPOS_PLATO, default='PRINCIPAL', verbose_name="Tipo de Plato")
     alergenos = models.ManyToManyField(Alergeno, blank=True, verbose_name="Alérgenos")
     imagen = models.ImageField(upload_to='platos/', blank=True, null=True, verbose_name="Imagen")
