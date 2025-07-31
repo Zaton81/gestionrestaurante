@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { RESTAURANT_SLOGAN} from "../config/constants";
 
 // Interfaz para los avisos que ya tenías
 interface Aviso {
@@ -53,7 +54,7 @@ const Home: React.FC = () => {
             alt="Logo Restaurante"
             style={{ maxWidth: "70%", height: "auto" }}
           />
-          <h3 className="mt-4">"El sabor que te hará volver"</h3>
+          <h3 className="mt-4">{RESTAURANT_SLOGAN}</h3>
         </div>
         {/* Columna Derecha: Horarios y botón */}
         <div className="col-md-6 text-center text-md-start">
