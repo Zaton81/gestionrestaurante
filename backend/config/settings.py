@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from django.conf.urls.static import static
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6-4n_g=sbyx0do@*x)d*!wg6w@3(chii2@$hb_vsc=izjkwkfo'
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -50,6 +54,7 @@ INSTALLED_APPS = [
     "pages",
     "social",
     "avisos",
+    "contacto", # App para el formulario de contacto
 ]
 
 MIDDLEWARE = [
@@ -145,6 +150,22 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]
 }
+
+# Email config para Gmail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Contraseña de aplicación de Gmail
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL') # Email que recibirá los mensajes del formulario
+
+# Configuración de email para desarrollo (consola) y producción
+if DEBUG:
+    # En desarrollo, los emails se mostrarán en la consola donde se ejecuta el servidor.
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # En producción, se usará el backend de SMTP real.
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
