@@ -57,7 +57,7 @@ const Home: React.FC = () => {
           <h3 className="mt-4">{RESTAURANT_SLOGAN}</h3>
         </div>
         {/* Columna Derecha: Horarios y botón */}
-        <div className="col-md-6 text-center text-md-start">
+        <div className="col-md-6 text-center text-md-start text-white">
           <h4 className="mb-3">Horarios</h4>
           <ul className="list-unstyled mb-4">
             {/* Mapeamos los horarios obtenidos de la API */}
