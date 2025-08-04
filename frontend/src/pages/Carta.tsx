@@ -21,6 +21,7 @@ interface Plato {
 interface Categoria {
   id: number;
   nombre: string;
+  descripcion: string;
   platos: Plato[];
 }
 
@@ -58,11 +59,16 @@ const Carta: React.FC = () => {
 
   return (
     <div className="container my-5">
-      <h2 className="text-center mb-5">{CARTA_TITULO}</h2>
+      <h2 className="text-center mb-5 text-white">{CARTA_TITULO}</h2>
       
       {categorias.map(categoria => (
         <div key={categoria.id} className="mb-5">
-          <h3 className="border-bottom pb-2 mb-4">{categoria.nombre}</h3>
+          <h3 className="border-bottom pb-2 mb-4 text-white">{categoria.nombre}</h3>
+          {/* Usamos dangerouslySetInnerHTML para renderizar el HTML de la descripción de la categoría */}
+          {categoria.descripcion && (
+            <div className="text-white mb-4" dangerouslySetInnerHTML={{ __html: categoria.descripcion }}></div>
+          )}
+
           {categoria.platos.map(plato => (
             <div key={plato.id} className="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
               <div className="d-flex align-items-start">
@@ -75,8 +81,9 @@ const Carta: React.FC = () => {
                   />
                 )}
                 <div>
-                  <h5 className="mb-1">{plato.nombre}</h5>
-                  <div className="mb-2 text-muted" dangerouslySetInnerHTML={{ __html: plato.descripcion }}></div>
+                  <h5 className="mb-1 text-primary">{plato.nombre}</h5>
+                  {/* Y también para la descripción del plato */}
+                  <div className="mb-2 text-warning" dangerouslySetInnerHTML={{ __html: plato.descripcion }}></div>
                   {plato.alergenos.length > 0 && (
                     <div className="d-flex align-items-center mt-2">
                       {plato.alergenos.map(alergeno => (
@@ -92,7 +99,7 @@ const Carta: React.FC = () => {
                   )}
                 </div>
               </div>
-              <h5 className="text-danger ms-4" style={{ whiteSpace: 'nowrap' }}>{plato.precio}€</h5>
+              <h5 className="text-light ms-4" style={{ whiteSpace: 'nowrap' }}>{plato.precio}€</h5>
             </div>
           ))}
         </div>
