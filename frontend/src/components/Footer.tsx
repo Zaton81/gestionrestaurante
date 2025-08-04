@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className="bg-dark text-light mt-5 py-4">
+    <footer className="bg-dark text-light mt-5 py-4 opacity-50">
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-6 mb-3 mb-md-0">

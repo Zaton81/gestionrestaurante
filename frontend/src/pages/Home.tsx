@@ -82,11 +82,11 @@ const Home: React.FC = () => {
       </div>
       {/* Avisos dinámicos (sin cambios) */}
       {avisos.length > 0 && (
-        <div className="mt-5">
+        <div className="mt-5 opacity-75">
           {avisos.map((aviso) => (
             <div
               key={aviso.id}
-              className="alert alert-warning"
+              className="alert alert-warning bg-info"
               dangerouslySetInnerHTML={{ __html: aviso.contenido }}
             />
           ))}
