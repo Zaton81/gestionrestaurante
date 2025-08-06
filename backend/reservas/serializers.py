@@ -27,3 +27,11 @@ class ReservaSerializer(serializers.ModelSerializer):
         if value > 20: # Límite para reservas online
             raise serializers.ValidationError("Para reservas de más de 20 personas, por favor, contáctenos directamente.")
         return value
+
+    def validate(self, data):
+        fecha = data.get('fecha')
+        hora = data.get('hora')
+        now = timezone.now()
+        if fecha == now.date() and hora <= now.time():
+            raise serializers.ValidationError("No se pueden hacer reservas para horas ya pasadas en el día de hoy.")
+        return data
