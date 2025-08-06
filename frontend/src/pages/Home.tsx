@@ -54,7 +54,7 @@ const Home: React.FC = () => {
             alt="Logo Restaurante"
             style={{ maxWidth: "70%", height: "auto" }}
           />
-          <h3 className="mt-4">{RESTAURANT_SLOGAN}</h3>
+          <h3 className="mt-4 text-white ">{RESTAURANT_SLOGAN}</h3>
         </div>
         {/* Columna Derecha: Horarios y botón */}
         <div className="col-md-6 text-center text-md-start text-white">

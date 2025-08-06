@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { CONTACTO_TITULO, CONTACTO_DESCRIPCION, TELEFONO, EMAIL } from '../config/constants';
-import axios from 'axios';
+import InputField from "../components/InputField";
+import TextAreaField from "../components/TextAreaField";
+import StatusAlert from "../components/StatusAlert";
+import SubmitButton from "../components/SubmitButton";
+import { enviarContacto } from "../services/api";
+
+interface ContactoFormData {
+  nombre: string;
+  email: string;
+  telefono: string;
+  mensaje: string;
+}
 
 const Contacto: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactoFormData>({
     nombre: '',
     email: '',
     telefono: '',
@@ -12,6 +23,7 @@ const Contacto: React.FC = () => {
 
   const [status, setStatus] = useState({ message: '', type: '' }); // type: 'success' or 'error'
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Partial<ContactoFormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -21,20 +33,27 @@ const Contacto: React.FC = () => {
     }));
   };
 
+  const validate = (): boolean => {
+    const errors: Partial<ContactoFormData> = {};
+    if (!formData.nombre.trim()) errors.nombre = "El nombre es obligatorio.";
+    if (!formData.email.trim()) errors.email = "El email es obligatorio.";
+    else if (!/^[^@]+@[^@]+\.[^@]+$/.test(formData.email)) errors.email = "El email no es válido.";
+    if (formData.telefono && !/^[0-9\s+\-()]{7,}$/.test(formData.telefono)) errors.telefono = "El teléfono no es válido.";
+    if (!formData.mensaje.trim()) errors.mensaje = "El mensaje es obligatorio.";
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validate()) return;
     setIsSubmitting(true);
     setStatus({ message: '', type: '' });
-
     try {
-      const response = await axios.post('http://localhost:8000/api/contacto/', formData);
+      const response = await enviarContacto(formData);
       setStatus({ message: response.data.mensaje, type: 'success' });
-      setFormData({ // Reset form
-        nombre: '',
-        email: '',
-        telefono: '',
-        mensaje: '',
-      });
+      setFormData({ nombre: '', email: '', telefono: '', mensaje: '' });
+      setFieldErrors({});
     } catch (error: any) {
       const errorMessage = error.response?.data?.error || 'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.';
       setStatus({ message: errorMessage, type: 'error' });
@@ -47,8 +66,8 @@ const Contacto: React.FC = () => {
   return (
     <div className="container my-5">
       <div className="text-center mb-5">
-        <h2>{CONTACTO_TITULO}</h2>
-        <p className="lead">{CONTACTO_DESCRIPCION}</p>
+        <h2 className="text-white">{CONTACTO_TITULO}</h2>
+        <p className="lead text-white">{CONTACTO_DESCRIPCION}</p>
       </div>
 
       <div className="row">
@@ -58,60 +77,43 @@ const Contacto: React.FC = () => {
               <div className="row">
                 <div className="col-md-7">
                   <h4 className="mb-4">Envíanos un mensaje</h4>                  
-                  {status.message && (
-                    <div className={`alert ${status.type === 'success' ? 'alert-success' : 'alert-danger'}`}>{status.message}</div>
-                  )}
-                  <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                      <label htmlFor="nombre" className="form-label">Nombre</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="nombre"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="email" className="form-label">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="telefono" className="form-label">Teléfono (Opcional)</label>
-                      <input
-                        type="tel"
-                        className="form-control"
-                        id="telefono"
-                        name="telefono"
-                        value={formData.telefono}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="mensaje" className="form-label">Mensaje</label>
-                      <textarea
-                        className="form-control"
-                        id="mensaje"
-                        name="mensaje"
-                        rows={5}
-                        value={formData.mensaje}
-                        onChange={handleChange}
-                        required
-                      ></textarea>
-                    </div>
-                    <button type="submit" className="btn btn-danger" disabled={isSubmitting}>
-                      {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
-                    </button>
+                  <StatusAlert message={status.message} type={status.type as "success" | "error"} aria-live="polite" />
+                  <form onSubmit={handleSubmit} aria-label="Formulario de contacto">
+                    <InputField
+                      label="Nombre"
+                      name="nombre"
+                      value={formData.nombre}
+                      onChange={handleChange}
+                      required
+                    />
+                    {fieldErrors.nombre && <div className="text-danger">{fieldErrors.nombre}</div>}
+                    <InputField
+                      label="Email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      type="email"
+                      required
+                    />
+                    {fieldErrors.email && <div className="text-danger">{fieldErrors.email}</div>}
+                    <InputField
+                      label="Teléfono (Opcional)"
+                      name="telefono"
+                      value={formData.telefono}
+                      onChange={handleChange}
+                      type="tel"
+                    />
+                    {fieldErrors.telefono && <div className="text-danger">{fieldErrors.telefono}</div>}
+                    <TextAreaField
+                      label="Mensaje"
+                      name="mensaje"
+                      value={formData.mensaje}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                    />
+                    {fieldErrors.mensaje && <div className="text-danger">{fieldErrors.mensaje}</div>}
+                    <SubmitButton loading={isSubmitting} text="Enviar Mensaje" loadingText="Enviando..." />
                   </form>
                 </div>
                 <div className="col-md-5" style={{ borderLeft: '1px solid #eee', paddingLeft: '2rem' }}>
