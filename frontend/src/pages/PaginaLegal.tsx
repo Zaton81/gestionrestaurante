@@ -46,22 +46,28 @@ const PaginaLegal: React.FC = () => {
     return <div className="container my-5 text-center"><h1>Cargando...</h1></div>;
   }
 
+  if (loading) {
+    return <div className="container my-5 text-center">Cargando contenido legal...</div>;
+  }
+
   if (error) {
     return <div className="container my-5 alert alert-danger">{error}</div>;
   }
 
   if (!pagina) {
-    return <div className="container my-5"><h1>Página no encontrada</h1></div>;
+    return null;
   }
+
 
   return (
     <div className="container my-5">
-      <title>{`${pagina.titulo} - Tu Restaurante`}</title>
-      <h1 className="mb-4">{pagina.titulo}</h1>
+      <h2 className="text-center mb-4">{pagina.titulo}</h2>
       <div dangerouslySetInnerHTML={{ __html: pagina.contenido }} />
-      <p className="text-muted mt-5"><small>Última actualización: {new Date(pagina.fecha_modificacion).toLocaleDateString('es-ES')}</small></p>
+      <div className="text-end text-muted mt-4">
+        Última modificación: {pagina.fecha_modificacion}
+      </div>
     </div>
   );
-};
+}
 
 export default PaginaLegal;

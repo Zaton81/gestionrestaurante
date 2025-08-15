@@ -5,6 +5,7 @@ import TextAreaField from "../components/TextAreaField";
 import StatusAlert from "../components/StatusAlert";
 import SubmitButton from "../components/SubmitButton";
 import { enviarContacto } from "../services/api";
+import './Contacto.css';
 
 interface ContactoFormData {
   nombre: string;
@@ -72,11 +73,11 @@ const Contacto: React.FC = () => {
 
       <div className="row">
         <div className="col-md-8 mx-auto">
-          <div className="card shadow-sm">
+          <div className="card shadow-sm" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
             <div className="card-body p-5">
               <div className="row">
                 <div className="col-md-7">
-                  <h4 className="mb-4">Envíanos un mensaje</h4>                  
+                  <h4 className="mb-4 text-white">Envíanos un mensaje</h4>                  
                   <StatusAlert message={status.message} type={status.type as "success" | "error"} aria-live="polite" />
                   <form onSubmit={handleSubmit} aria-label="Formulario de contacto">
                     <InputField
@@ -85,6 +86,7 @@ const Contacto: React.FC = () => {
                       value={formData.nombre}
                       onChange={handleChange}
                       required
+                      inputClassName="form-control-dark"
                     />
                     {fieldErrors.nombre && <div className="text-danger">{fieldErrors.nombre}</div>}
                     <InputField
@@ -94,6 +96,7 @@ const Contacto: React.FC = () => {
                       onChange={handleChange}
                       type="email"
                       required
+                      inputClassName="form-control-dark"
                     />
                     {fieldErrors.email && <div className="text-danger">{fieldErrors.email}</div>}
                     <InputField
@@ -102,6 +105,7 @@ const Contacto: React.FC = () => {
                       value={formData.telefono}
                       onChange={handleChange}
                       type="tel"
+                      inputClassName="form-control-dark"
                     />
                     {fieldErrors.telefono && <div className="text-danger">{fieldErrors.telefono}</div>}
                     <TextAreaField
@@ -111,22 +115,23 @@ const Contacto: React.FC = () => {
                       onChange={handleChange}
                       required
                       rows={5}
+                      textAreaClassName="form-control-dark"
                     />
                     {fieldErrors.mensaje && <div className="text-danger">{fieldErrors.mensaje}</div>}
                     <SubmitButton loading={isSubmitting} text="Enviar Mensaje" loadingText="Enviando..." />
                   </form>
                 </div>
                 <div className="col-md-5" style={{ borderLeft: '1px solid #eee', paddingLeft: '2rem' }}>
-                  <h4 className="mb-4">Información de Contacto</h4>
-                  <p>
+                  <h4 className="mb-4 text-white">Información de Contacto</h4>
+                  <p className="text-white">
                     <strong>Teléfono:</strong><br />
                     <a href={`tel:${TELEFONO}`}>{TELEFONO}</a>
                   </p>
-                  <p>
+                  <p className="text-white">
                     <strong>Email:</strong><br />
                     <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                   </p>
-                  <p>
+                  <p className="text-white">
                     Si prefieres, no dudes en llamarnos directamente o enviarnos un correo electrónico.
                   </p>
                 </div>
