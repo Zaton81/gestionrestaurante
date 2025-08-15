@@ -9,16 +9,17 @@ interface InputFieldProps {
   required?: boolean;
   min?: string | number;
   max?: string | number;
+  inputClassName?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
-  label, name, value, onChange, type = "text", required = false, min, max
+  label, name, value, onChange, type = "text", required = false, min, max, inputClassName = ""
 }) => (
   <div className="mb-3">
     <label htmlFor={name} className="form-label">{label}</label>
     <input
       type={type}
-      className="form-control"
+      className={`form-control ${inputClassName}`}
       id={name}
       name={name}
       value={value}

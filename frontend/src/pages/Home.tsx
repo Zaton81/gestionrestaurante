@@ -44,6 +44,9 @@ const Home: React.FC = () => {
   // Función para formatear la hora (de "HH:MM:SS" a "HH:MM")
   const formatTime = (time: string) => time.substring(0, 5);
 
+  const pageTitle = "Inicio | Restaurante";
+  const pageDescription = "Bienvenido al restaurante. Consulta avisos, horarios y reserva tu mesa.";
+
   return (
     <div className="container my-5">
       <div className="row align-items-center">
@@ -80,6 +83,7 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
+      {/* ...existing code... */}
       {/* Avisos dinámicos (sin cambios) */}
       {avisos.length > 0 && (
         <div className="mt-5 opacity-75">

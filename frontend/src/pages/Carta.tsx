@@ -58,6 +58,7 @@ const Carta: React.FC = () => {
   }
 
   return (
+    <>
     <div className="container my-5">
       <h2 className="text-center mb-5 text-white">{CARTA_TITULO}</h2>
       
@@ -105,6 +106,7 @@ const Carta: React.FC = () => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 
