@@ -60,7 +60,7 @@ const PaginaLegal: React.FC = () => {
 
 
   return (
-    <div className="container my-5">
+    <div className="container mt-5 pt-5">
       <div className="card bg-dark bg-opacity-75 text-white">
         <div className="card-body p-4">
           <h2 className="card-title text-center mb-4 text-primary">{pagina.titulo}</h2>

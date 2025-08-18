@@ -47,8 +47,8 @@ const Home: React.FC = () => {
   
 
   return (
-    <div className="container my-5">
-      <div className="card bg-dark bg-opacity-75 text-white">
+    <div className="container mt-5 pt-5">
+      <div className="card bg-dark bg-opacity-75 text-white ">
         <div className="card-body p-4">
           <div className="row align-items-center">
             {/* Columna Izquierda: Imagen y lema */}

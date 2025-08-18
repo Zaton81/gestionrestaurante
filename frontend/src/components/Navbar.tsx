@@ -5,7 +5,7 @@ import { Navbar as RBNavbar, Nav, Container } from "react-bootstrap";
 import "./Navbar.css";
 
 const Navbar: React.FC = () => (
-  <RBNavbar bg="dark" variant="dark" expand="lg" role="navigation" aria-label="Menú principal">
+  <RBNavbar bg="dark" variant="dark" expand="lg" fixed="top" role="navigation" aria-label="Menú principal">
     <Container fluid>
       <RBNavbar.Brand as={Link} to="/">{RESTAURANT_NAME}</RBNavbar.Brand>
       <RBNavbar.Toggle aria-controls="navbarNav" />

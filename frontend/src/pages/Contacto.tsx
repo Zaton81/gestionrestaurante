@@ -65,7 +65,7 @@ const Contacto: React.FC = () => {
   };
 
   return (
-    <div className="container my-5">
+    <div className="container mt-5 pt-5">
       <div className="text-center mb-5">
         <h2 className="text-white">{CONTACTO_TITULO}</h2>
         <p className="lead text-white">{CONTACTO_DESCRIPCION}</p>

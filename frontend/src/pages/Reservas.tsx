@@ -231,7 +231,7 @@ const Reservas: React.FC = () => {
   };
 
   return (
-    <div className="container my-5">
+    <div className="container mt-5 pt-5">
       <div className="row">
         <div className="col-md-8 mx-auto">
           <div className="card bg-dark bg-opacity-75 text-white shadow-sm">
