@@ -59,7 +59,7 @@ const Carta: React.FC = () => {
 
   return (
     <>
-    <div className="container my-5">
+    <div className="container mt-5 pt-5">
       <h2 className="text-center mb-5 text-white">{CARTA_TITULO}</h2>
       
       {categorias.map(categoria => (

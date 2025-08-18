@@ -84,7 +84,7 @@ class CrearReservaView(generics.CreateAPIView):
     """
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
-    permission_classes = [IsAuthenticated] # Solo usuarios autenticados pueden crear reservas.
+    permission_classes = [] # Solo usuarios autenticados pueden crear reservas. DESHABILITADO
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
