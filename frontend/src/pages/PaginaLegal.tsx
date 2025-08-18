@@ -61,10 +61,16 @@ const PaginaLegal: React.FC = () => {
 
   return (
     <div className="container my-5">
-      <h2 className="text-center mb-4">{pagina.titulo}</h2>
-      <div dangerouslySetInnerHTML={{ __html: pagina.contenido }} />
-      <div className="text-end text-muted mt-4">
-        Última modificación: {pagina.fecha_modificacion}
+      <div className="card bg-dark bg-opacity-75 text-white">
+        <div className="card-body p-4">
+          <h2 className="card-title text-center mb-4 text-primary">{pagina.titulo}</h2>
+          <div className="card-text" dangerouslySetInnerHTML={{ __html: pagina.contenido }} />
+          <div className="text-end mt-4">
+            <small>
+              Última modificación: {new Date(pagina.fecha_modificacion).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            </small>
+          </div>
+        </div>
       </div>
     </div>
   );

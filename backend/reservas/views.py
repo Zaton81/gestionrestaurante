@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
+from rest_framework.permissions import IsAuthenticated
 from .models import Mesa, Reserva
 from horarios.models import Horario, HorarioEspecial # Importar ambos modelos de horario
 from .serializers import ReservaSerializer
@@ -15,7 +16,6 @@ TODAS_LAS_HORAS = sorted(HORAS_COMIDA + HORAS_CENA)
 class DisponibilidadView(APIView):
     """
     Verifica las horas disponibles para una fecha y número de personas dados.
-    Ejemplo de petición GET: /api/reservas/disponibilidad/?fecha=2024-09-25&personas=4
     """
     permission_classes = [] # Permitir acceso anónimo
 
@@ -51,7 +51,7 @@ class DisponibilidadView(APIView):
                     return Response({'error': 'Lo sentimos, el restaurante permanece cerrado ese día. Por favor, elija otra fecha.'}, status=status.HTTP_400_BAD_REQUEST)
             except Horario.DoesNotExist:
                 return Response({'error': 'No hay un horario definido para el día seleccionado.'}, status=status.HTTP_400_BAD_REQUEST)
-        # --- FIN DE LA NUEVA VALIDACIÓN ---
+       
 
         # 1. Encontrar todas las mesas activas que pueden albergar al número de personas
         mesas_adecuadas = Mesa.objects.filter(capacidad__gte=personas, activa=True)
@@ -80,10 +80,11 @@ class DisponibilidadView(APIView):
 class CrearReservaView(generics.CreateAPIView):
     """
     Crea una nueva reserva, asignando automáticamente la mejor mesa disponible.
+    Este endpoint requiere que el usuario esté autenticado.
     """
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
-    permission_classes = [] # Permitir acceso anónimo
+    permission_classes = [IsAuthenticated] # Solo usuarios autenticados pueden crear reservas.
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -91,7 +92,7 @@ class CrearReservaView(generics.CreateAPIView):
         
         datos = serializer.validated_data
         
-        # --- NUEVA VALIDACIÓN DE HORARIOS (al crear la reserva) ---
+        # --- NUEVA VALIDACIÓN DE HORARIOS  ---
         try:
             horario_especial = HorarioEspecial.objects.get(fecha=datos['fecha'])
             if horario_especial.cerrado:
