@@ -153,7 +153,7 @@ const Reservas: React.FC = () => {
           : availableTimes;
         return (
           <form onSubmit={handleReservationSubmit}>
-            <div className="mb-4 p-3 bg-light rounded">
+            <div className="mb-4 p-3 border-bottom">
               <p className="mb-1"><strong>Fecha:</strong> {new Date(formData.fecha).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
               <p className="mb-0"><strong>Personas:</strong> {formData.numero_personas}</p>
             </div>
@@ -234,12 +234,12 @@ const Reservas: React.FC = () => {
     <div className="container my-5">
       <div className="row">
         <div className="col-md-8 mx-auto">
-          <div className="text-center mb-5">
-            <h2 className="text-white">Reservas Online</h2>
-            <p className="lead text-white">Asegure su mesa en nuestro restaurante. Complete el formulario para consultar la disponibilidad y realizar su reserva.</p>
-          </div>
-          <div className="card shadow-sm">
+          <div className="card bg-dark bg-opacity-75 text-white shadow-sm">
             <div className="card-body p-4 p-md-5">
+              <div className="text-center mb-5">
+                <h2>Reservas Online</h2>
+                <p className="lead">Asegure su mesa en nuestro restaurante. Complete el formulario para consultar la disponibilidad y realizar su reserva.</p>
+              </div>
               {status.message && (<StatusAlert message={status.message} type={status.type as "success" | "error"} />)}
               {renderStepContent()}
             </div>

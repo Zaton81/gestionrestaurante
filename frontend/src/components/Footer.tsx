@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { RESTAURANT_NAME, RESTAURANT_SLOGAN } from "../config/constants";
+import { RESTAURANT_NAME } from "../config/constants";
 
 interface Pagina {
   slug: string;

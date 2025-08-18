@@ -22,7 +22,7 @@ class Alergeno(models.Model):
     nombre = models.CharField(max_length=100, unique=True, verbose_name="Nombre")
     icono = models.ImageField(upload_to='alergenos/', blank=True, null=True, verbose_name="Icono")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
-    # podrías añadir un campo para un icono
+    
 
     class Meta:
         verbose_name = "Alérgeno"

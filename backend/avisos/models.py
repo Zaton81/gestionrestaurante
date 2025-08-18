@@ -16,4 +16,7 @@ class Aviso(models.Model):
         ordering = ['orden', '-fecha_modificacion']
 
     def __str__(self):
+        """
+        Devuelve el título del aviso o un identificador genérico si no tiene título.
+        """
         return self.titulo or f"Aviso {self.id}"

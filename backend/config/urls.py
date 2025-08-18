@@ -25,8 +25,8 @@ urlpatterns = [
     path('api/', include('pages.urls')),
     path('api/', include('social.urls')),
     path('api/', include('avisos.urls')),
-    path('api/', include('contacto.urls')), # URLs para la app de contacto
-    path('api/', include('reservas.urls')), # URLs para la app de reservas
+    path('api/', include('contacto.urls')), 
+    path('api/', include('reservas.urls')), 
     path('api-auth/', include('rest_framework.urls'))
 
 ]
